@@ -34,6 +34,12 @@ describe('the module', function() {
       done();
     });
   });
+  it('still runs after the timeout but items < maxItems', function(done) {
+    async.map([1,2], function(item, callback) {
+      module.handleItem(item, item, callback);
+    },
+    done);
+  });
 });
 
 // vim: set et sw=2 ts=2 colorcolumn=80:

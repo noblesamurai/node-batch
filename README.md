@@ -16,17 +16,23 @@ var batch = require('work-batcher'),
     async = require('async'),
     expect = require('expect.js');
 
+// Call this to init the module.
 batch.init({
+  // Will assemble the individual payloads into one payload for the worker when
+  //  it is time to call it.
   multiplexer: function(items) {
     return items.join(',');
   },
-  demultiplexer: function(key, result) {
-    return result[key];
+  // Will dis-assemble the result into individual results when the worker gives
+  // us a result.
+  demultiplexer: function(item, index, result) {
+    return result[index];
   },
+  // The worker to call.  called when we have maxItems or timeout occurs.
   worker: function(data, callback) {
     var result = {};
-    data.split(',').forEach(function(item) {
-      result[item] = item * item;
+    data.split(',').forEach(function(item, index) {
+      result[index] = item * item;
     });
     callback(null, result);
   },
@@ -34,8 +40,12 @@ batch.init({
   timeout: 500
 });
 
+/**
+ * Simple example involving a worker function that returns the squares of each
+ * element in the array.
+ */
 async.map([1,2,3,4], function(item, callback) {
-  module.handleItem(item, item, callback);
+  module.handleItem(item, callback);
 },
 function cb(err, results) {
   if(err) return done(err);

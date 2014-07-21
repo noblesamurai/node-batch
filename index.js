@@ -1,6 +1,8 @@
+var _ = require('lodash');
+
 var multiplexer, // called to create payload from items
     demultiplexer, // called to extract individual results from response
-    demuxKeys, items, callbacks, // hold keys, items, callbacks
+    items, //  hold items and their callbacks
     maxItems, timeout,  timer; // parameters
 
 exports.init = function(options) {
@@ -13,10 +15,11 @@ exports.init = function(options) {
   resetState();
 };
 
-exports.handleItem = function(key, itemPayload, callback) {
-  demuxKeys.push(key);
-  items.push(itemPayload);
-  callbacks.push(callback);
+exports.handleItem = function(itemPayload, callback) {
+  items.push({
+    payload: itemPayload,
+    callback: callback
+  });
   if (items.length === maxItems) {
         flush();
   } else if (items.length === 1) {
@@ -26,25 +29,24 @@ exports.handleItem = function(key, itemPayload, callback) {
 };
 
 function resetState() {
-  demuxKeys = [];
   items = [];
-  callbacks = [];
+  clearTimeout(timer);
 }
 
 function flush() {
-  var myDemuxKeys = demuxKeys,
-      myItems = items,
-      myCallbacks = callbacks;
-
+  var myItems = items;
   resetState();
 
-  clearTimeout(timer);
-  var payload = multiplexer(myItems);
+  var payload = multiplexer(_.pluck(myItems, 'payload'));
   worker(payload, issueCallbacks);
 
   function issueCallbacks(err, result) {
-    myCallbacks.forEach(function(callback, index) {
-      callback(err, demultiplexer(myDemuxKeys[index], result));
+    console.log('result:', result);
+    myItems.forEach(function(item, index) {
+      console.log('item:', item);
+      if (err) return item.callback(err);
+
+      item.callback(err, demultiplexer(item.payload, index, result));
     });
   }
 }

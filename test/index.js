@@ -8,13 +8,13 @@ describe('the module', function() {
       multiplexer: function(items) {
         return items.join(',');
       },
-      demultiplexer: function(key, result) {
-        return result[key];
+      demultiplexer: function(item, index, result) {
+        return result[index];
       },
       worker: function(data, callback) {
         var result = {};
-        data.split(',').forEach(function(item) {
-          result[item] = item * item;
+        data.split(',').forEach(function(item, index) {
+          result[index] = item * item;
         });
         callback(null, result);
       },
@@ -25,7 +25,7 @@ describe('the module', function() {
 
   it('receives the correct results', function(done) {
     async.map([1,2,3,4], function(item, callback) {
-      module.handleItem(item, item, callback);
+      module.handleItem(item, callback);
     },
     function cb(err, results) {
       if(err) return done(err);
@@ -36,7 +36,7 @@ describe('the module', function() {
   });
   it('still runs after the timeout but items < maxItems', function(done) {
     async.map([1,2], function(item, callback) {
-      module.handleItem(item, item, callback);
+      module.handleItem(item, callback);
     },
     done);
   });

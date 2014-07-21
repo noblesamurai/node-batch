@@ -41,9 +41,7 @@ function flush() {
   worker(payload, issueCallbacks);
 
   function issueCallbacks(err, result) {
-    console.log('result:', result);
     myItems.forEach(function(item, index) {
-      console.log('item:', item);
       if (err) return item.callback(err);
 
       item.callback(err, demultiplexer(item.payload, index, result));

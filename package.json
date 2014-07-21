@@ -1,6 +1,6 @@
 {
   "name": "work-batcher",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "node-batch ==========",
   "main": "index.js",
   "directories": {

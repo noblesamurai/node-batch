@@ -1,4 +1,4 @@
-node-batch
+work-batcher
 ==========
 
 Module to handle batching/aggregation of work with a timeout. E.g. batching

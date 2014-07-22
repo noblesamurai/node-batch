@@ -1,0 +1,30 @@
+{
+  "name": "work-batcher",
+  "version": "3.0.0",
+  "description": "Aggregates payloads/work parcels together so they can be handled in one go. E.g. use to make one request to an API where payload can be stuffed with multiple items.",
+  "keywords": ["batch", "multiplex"],
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1"
+  },
+  "scripts": {
+    "test": "mocha --recursive test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noblesamurai/node-batch.git"
+  },
+  "author": "Timothy Leslie Allen <allen.timothy.email@gmail.com> (https://github.com/timlesallen)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noblesamurai/node-batch/issues"
+  },
+  "homepage": "https://github.com/noblesamurai/node-batch"
+}

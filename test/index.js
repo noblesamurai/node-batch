@@ -2,9 +2,9 @@ var async = require('async'),
     expect = require('expect.js');
 
 describe('the module', function() {
-  var module = require('../index');
+  var module;
   beforeEach(function() {
-    module.init({
+    module = new require('../index')({
       multiplexer: function(items) {
         return items.join(',');
       },

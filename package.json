@@ -1,7 +1,7 @@
 {
   "name": "work-batcher",
-  "version": "2.0.2",
-  "description": "node-batch ==========",
+  "version": "3.0.0",
+  "description": "Aggregates payloads/work parcels together so they can be handled in one go. E.g. use to make one request to an API where payload can be stuffed with multiple items.",
   "keywords": ["batch", "multiplex"],
   "main": "index.js",
   "directories": {

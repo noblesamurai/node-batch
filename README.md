@@ -11,14 +11,11 @@ demultiplex the results in the response.
 # Usage
 ```javascript
 
-var batch = require('work-batcher'),
+var Batch = require('work-batcher'),
     async = require('async'),
     expect = require('expect.js');
 
-var pool = batch.createPool();
-
-// Call this to init the module.
-pool.init({
+var batch = new Batch({
   // Will assemble the individual payloads into one payload for the worker when
   //  it is time to call it.
   multiplexer: function(items) {

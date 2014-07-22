@@ -21,7 +21,7 @@ exports.handleItem = function(itemPayload, callback) {
     callback: callback
   });
   if (items.length === maxItems) {
-        flush();
+    flush();
   } else if (items.length === 1) {
     // We are prepared to wait up until timeout for other items.
     timer = setTimeout(flush, timeout);

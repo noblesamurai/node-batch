@@ -1,5 +1,4 @@
 work-batcher
-==========
 
 Module to handle batching/aggregation of work with a timeout. E.g. batching
 requests to an API where you can stuff the payload will multiple queries.
@@ -16,8 +15,10 @@ var batch = require('work-batcher'),
     async = require('async'),
     expect = require('expect.js');
 
+var pool = batch.createPool();
+
 // Call this to init the module.
-batch.init({
+pool.init({
   // Will assemble the individual payloads into one payload for the worker when
   //  it is time to call it.
   multiplexer: function(items) {
@@ -45,9 +46,9 @@ batch.init({
  * element in the array.
  */
 async.map([1,2,3,4], function(item, callback) {
-  module.handleItem(item, callback);
+  pool.handleItem(item, callback);
 },
-function cb(err, results) {
+function callback(err, results) {
   if(err) return done(err);
 
   expect(results).to.eql([1,4,9,16]);

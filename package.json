@@ -1,7 +1,8 @@
 {
   "name": "work-batcher",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "node-batch ==========",
+  "keywords": ["batch", "multiplex"],
   "main": "index.js",
   "directories": {
     "test": "test"
